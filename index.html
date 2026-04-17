@@ -952,30 +952,30 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-/* ── 2. SCROLL REVEAL: all animation types ── */
-const animSelectors = '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing';
-const animEls = document.querySelectorAll(animSelectors);
+/* ══════════════════════════════════════
+   BULLETPROOF SCROLL REVEAL
+   Uses rAF loop — no IntersectionObserver
+   nesting issues, fires reliably always
+══════════════════════════════════════ */
+const allAnimEls = document.querySelectorAll(
+  '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing'
+);
 
-const revealIO = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('on');
-      revealIO.unobserve(e.target);
-    }
-  });
-}, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
-
-animEls.forEach(el => revealIO.observe(el));
-
-/* ── Force-trigger any elements already in viewport on load ── */
-function checkInView() {
-  animEls.forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight - 40) el.classList.add('on');
+function revealAll() {
+  const wh = window.innerHeight;
+  allAnimEls.forEach(el => {
+    if (el.classList.contains('on')) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < wh - 30) el.classList.add('on');
   });
 }
-checkInView();
-window.addEventListener('scroll', checkInView, { passive: true });
+
+// Run on scroll and on load
+revealAll();
+window.addEventListener('scroll', revealAll, { passive: true });
+window.addEventListener('resize', revealAll, { passive: true });
+// Also run after fonts/images load
+window.addEventListener('load', revealAll);
 
 /* ── 3. COUNTER ANIMATION: numbers count up when stats come into view ── */
 function animateCounter(el, target, suffix, duration = 1800) {
@@ -991,19 +991,24 @@ function animateCounter(el, target, suffix, duration = 1800) {
 }
 
 const statEls = document.querySelectorAll('.stt');
-const counterIO = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('on');
-      const counter = e.target.querySelector('.counter');
-      const target  = parseInt(e.target.dataset.target);
-      const suffix  = e.target.dataset.suffix;
+const firedStats = new Set();
+function checkStats() {
+  statEls.forEach(el => {
+    if (firedStats.has(el)) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 30) {
+      firedStats.add(el);
+      el.classList.add('on');
+      const counter = el.querySelector('.counter');
+      const target  = parseInt(el.dataset.target);
+      const suffix  = el.dataset.suffix;
       if (counter && target) animateCounter(counter, target, suffix);
-      counterIO.unobserve(e.target);
     }
   });
-}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
-statEls.forEach(el => counterIO.observe(el));
+}
+checkStats();
+window.addEventListener('scroll', checkStats, { passive: true });
+window.addEventListener('load', checkStats);
 
 /* ── 4. PARALLAX: subtle background movement on scroll ── */
 const parallaxBg = document.getElementById('parallaxBg');
@@ -1082,19 +1087,20 @@ function typewrite(el, text, speed = 55) {
   el.classList.add('typewriter');
   tick();
 }
-const twIO = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      typewrite(e.target, e.target.dataset.text || e.target.textContent);
-      twIO.unobserve(e.target);
+const firedTW = new Set();
+function checkTypewriters() {
+  document.querySelectorAll('.sl').forEach(el => {
+    if (firedTW.has(el)) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 20) {
+      firedTW.add(el);
+      typewrite(el, el.dataset.text || el.textContent);
     }
   });
-}, { threshold: 0, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.sl').forEach(el => {
-  el.dataset.text = el.textContent;
-  el.textContent = '';
-  twIO.observe(el);
-});
+}
+checkTypewriters();
+window.addEventListener('scroll', checkTypewriters, { passive: true });
+window.addEventListener('load', checkTypewriters);
 
 /* ── 9. TILT EFFECT on cards (mobile-friendly gyroscope-style) ── */
 document.querySelectorAll('.pc, .tc, .hw').forEach(card => {
