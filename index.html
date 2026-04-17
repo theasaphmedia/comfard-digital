@@ -955,6 +955,7 @@ window.addEventListener('scroll', () => {
 /* ── 2. SCROLL REVEAL: all animation types ── */
 const animSelectors = '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing';
 const animEls = document.querySelectorAll(animSelectors);
+
 const revealIO = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -962,8 +963,19 @@ const revealIO = new IntersectionObserver(entries => {
       revealIO.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+
 animEls.forEach(el => revealIO.observe(el));
+
+/* ── Force-trigger any elements already in viewport on load ── */
+function checkInView() {
+  animEls.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 40) el.classList.add('on');
+  });
+}
+checkInView();
+window.addEventListener('scroll', checkInView, { passive: true });
 
 /* ── 3. COUNTER ANIMATION: numbers count up when stats come into view ── */
 function animateCounter(el, target, suffix, duration = 1800) {
@@ -990,7 +1002,7 @@ const counterIO = new IntersectionObserver(entries => {
       counterIO.unobserve(e.target);
     }
   });
-}, { threshold: 0.3 });
+}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 statEls.forEach(el => counterIO.observe(el));
 
 /* ── 4. PARALLAX: subtle background movement on scroll ── */
@@ -1077,7 +1089,7 @@ const twIO = new IntersectionObserver(entries => {
       twIO.unobserve(e.target);
     }
   });
-}, { threshold: 0.8 });
+}, { threshold: 0, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.sl').forEach(el => {
   el.dataset.text = el.textContent;
   el.textContent = '';
