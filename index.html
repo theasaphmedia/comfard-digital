@@ -953,29 +953,32 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ══════════════════════════════════════
-   BULLETPROOF SCROLL REVEAL
-   Uses rAF loop — no IntersectionObserver
-   nesting issues, fires reliably always
+   BULLETPROOF SCROLL REVEAL — IIFE
 ══════════════════════════════════════ */
-const allAnimEls = document.querySelectorAll(
-  '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing'
-);
+(function() {
+  var SEL = '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing';
 
-function revealAll() {
-  const wh = window.innerHeight;
-  allAnimEls.forEach(el => {
-    if (el.classList.contains('on')) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top < wh - 30) el.classList.add('on');
-  });
-}
+  function revealAll() {
+    var els = document.querySelectorAll(SEL);
+    var wh = window.innerHeight;
+    for (var i = 0; i < els.length; i++) {
+      if (!els[i].classList.contains('on')) {
+        var top = els[i].getBoundingClientRect().top;
+        if (top < wh - 20) els[i].classList.add('on');
+      }
+    }
+  }
 
-// Run on scroll and on load
-revealAll();
-window.addEventListener('scroll', revealAll, { passive: true });
-window.addEventListener('resize', revealAll, { passive: true });
-// Also run after fonts/images load
-window.addEventListener('load', revealAll);
+  // Run immediately
+  revealAll();
+  // Run on every scroll
+  window.addEventListener('scroll', revealAll, { passive: true });
+  // Run after full page load
+  window.addEventListener('load', revealAll);
+  // Safety net — run every 300ms for 5 seconds after page loads
+  var safety = setInterval(revealAll, 300);
+  setTimeout(function() { clearInterval(safety); }, 5000);
+})();
 
 /* ── 3. COUNTER ANIMATION: numbers count up when stats come into view ── */
 function animateCounter(el, target, suffix, duration = 1800) {
