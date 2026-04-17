@@ -303,6 +303,51 @@
   @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
 
   /* ════════════════════════════════
+     SCROLL ANIMATIONS
+     Elements start visible (no opacity:0 in HTML)
+     JS adds the class + .visible to trigger
+  ════════════════════════════════ */
+  /* fade up */
+  .sa-up{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
+  .sa-up.sa-hidden{opacity:0;transform:translateY(40px)}
+  .sa-up.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* slide left */
+  .sa-left{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.25,.46,.45,.94)}
+  .sa-left.sa-hidden{opacity:0;transform:translateX(-60px)}
+  .sa-left.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* slide right */
+  .sa-right{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.25,.46,.45,.94)}
+  .sa-right.sa-hidden{opacity:0;transform:translateX(60px)}
+  .sa-right.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* scale */
+  .sa-scale{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.34,1.4,.64,1)}
+  .sa-scale.sa-hidden{opacity:0;transform:scale(.85)}
+  .sa-scale.sa-hidden.sa-visible{opacity:1;transform:scale(1)}
+  /* flip */
+  .sa-flip{opacity:1;transform:none;transition:opacity .75s ease,transform .75s ease}
+  .sa-flip.sa-hidden{opacity:0;transform:perspective(600px) rotateX(20deg) translateY(30px)}
+  .sa-flip.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* blur */
+  .sa-blur{opacity:1;filter:none;transition:opacity .8s ease,filter .8s ease,transform .8s ease;transform:none}
+  .sa-blur.sa-hidden{opacity:0;filter:blur(12px);transform:translateY(16px)}
+  .sa-blur.sa-hidden.sa-visible{opacity:1;filter:none;transform:none}
+  /* light */
+  .sa-light{opacity:1;filter:none;transition:opacity 1s ease,filter 1s ease}
+  .sa-light.sa-hidden{opacity:0;filter:brightness(.1)}
+  .sa-light.sa-hidden.sa-visible{opacity:1;filter:none}
+  /* bounce */
+  .sa-bounce{opacity:1;transform:none;transition:opacity .5s ease,transform .85s cubic-bezier(.34,1.8,.64,1)}
+  .sa-bounce.sa-hidden{opacity:0;transform:translateY(50px)}
+  .sa-bounce.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* squeeze */
+  .sa-squeeze{opacity:1;transform:none;transition:opacity .6s ease,transform .7s cubic-bezier(.34,1.5,.64,1)}
+  .sa-squeeze.sa-hidden{opacity:0;transform:scaleY(.2);transform-origin:bottom}
+  .sa-squeeze.sa-hidden.sa-visible{opacity:1;transform:none}
+  /* stagger delays */
+  .sa-d1{transition-delay:.1s}.sa-d2{transition-delay:.2s}.sa-d3{transition-delay:.3s}
+  .sa-d4{transition-delay:.4s}.sa-d5{transition-delay:.5s}.sa-d6{transition-delay:.6s}
+
+  /* ════════════════════════════════
      HAMBURGER BUTTON
   ════════════════════════════════ */
   .burger{
@@ -639,17 +684,17 @@
 <!-- STATS with counting numbers -->
 <section class="stats-sec">
   <div class="stats-row">
-    <div class="stt " data-target="100" data-suffix="+">
+    <div class="stt sa-bounce sa-hidden" data-target="100" data-suffix="+">
       <div class="stt-sub">Serving</div>
       <div class="stt-n counter">0+</div>
       <div class="stt-l">Service Businesses Transformed</div>
     </div>
-    <div class="stt " data-target="3" data-suffix="x">
+    <div class="stt sa-bounce sa-hidden sa-d2" data-target="3" data-suffix="x">
       <div class="stt-sub">Average</div>
       <div class="stt-n counter">0x</div>
       <div class="stt-l">Lead Growth in First 90 Days</div>
     </div>
-    <div class="stt " data-target="5" data-suffix="★">
+    <div class="stt sa-bounce sa-hidden sa-d4" data-target="5" data-suffix="★">
       <div class="stt-sub">Rated</div>
       <div class="stt-n counter">0★</div>
       <div class="stt-l">Client Satisfaction Across the Board</div>
@@ -661,13 +706,13 @@
 <section id="about" class="about-sec sec">
   <div class="about-grid">
     <div>
-      <div class="about-img-box">
+      <div class="about-img-box sa-left sa-hidden">
         <div class="about-avatar">MA</div>
       </div>
     </div>
     <div>
       <span class="sl">About ComfArd Digital</span>
-      <h2 class="about-text" style="font-family:var(--F);font-size:clamp(1.9rem,2.8vw,2.6rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.25rem">
+      <h2 class="about-text sa-right sa-hidden" style="font-family:var(--F);font-size:clamp(1.9rem,2.8vw,2.6rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.25rem">
         <span><span class="clip-inner">We're in the business of</span></span>
         <span><span class="clip-inner" style="color:var(--coral)">authentic connections.</span></span>
       </h2>
@@ -686,7 +731,7 @@
 
 <!-- SERVICES -->
 <section id="services" class="srv-sec sec">
-  <div class="srv-head">
+  <div class="srv-head sa-blur sa-hidden">
     <div>
       <span class="sl">What We Do</span>
       <h2 class="sh">Content powered by strategy,<br><em>built to perform.</em></h2>
@@ -694,10 +739,10 @@
     <p>From strategy to execution, we handle every element of your digital presence so your social media becomes your most powerful sales tool.</p>
   </div>
   <div class="srv-grid">
-    <div class="sc"><div class="sc-num">01</div><h3>Social Media Management</h3><p>We strategize, design, caption, schedule, and post for you — so your social media runs consistently without you lifting a finger. Covers Instagram, Facebook, TikTok and more.</p><div class="sc-arr">Learn more →</div></div>
-    <div class="sc"><div class="sc-num">02</div><h3>Video Production & Editing</h3><p>We produce visually stunning, audience-focused content that grabs attention and drives engagement, so your brand stays memorable and relevant across all platforms.</p><div class="sc-arr">Learn more →</div></div>
-    <div class="sc"><div class="sc-num">03</div><h3>Paid Ads — Meta & Google</h3><p>We create targeted ad campaigns on Meta and Google to get your business qualified leads, increase bookings, and put your brand in front of your ideal clients.</p><div class="sc-arr">Learn more →</div></div>
-    <div class="sc"><div class="sc-num">04</div><h3>Automation & Coaching</h3><p>ManyChat DM automation systems and coaching sessions to help you build confidence, optimise your social strategy, and convert followers on autopilot.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc sa-flip sa-hidden sa-d1"><div class="sc-num">01</div><h3>Social Media Management</h3><p>We strategize, design, caption, schedule, and post for you — so your social media runs consistently without you lifting a finger. Covers Instagram, Facebook, TikTok and more.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc sa-flip sa-hidden sa-d2"><div class="sc-num">02</div><h3>Video Production & Editing</h3><p>We produce visually stunning, audience-focused content that grabs attention and drives engagement, so your brand stays memorable and relevant across all platforms.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc sa-flip sa-hidden sa-d3"><div class="sc-num">03</div><h3>Paid Ads — Meta & Google</h3><p>We create targeted ad campaigns on Meta and Google to get your business qualified leads, increase bookings, and put your brand in front of your ideal clients.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc sa-flip sa-hidden sa-d4"><div class="sc-num">04</div><h3>Automation & Coaching</h3><p>ManyChat DM automation systems and coaching sessions to help you build confidence, optimise your social strategy, and convert followers on autopilot.</p><div class="sc-arr">Learn more →</div></div>
   </div>
 </section>
 
@@ -803,12 +848,12 @@
   <span class="sl">Free & Paid Resources</span>
   <h2 class="sh">Start growing,<br><em>even before we talk.</em></h2>
   <div class="res-grid">
-    <div class="rc"><div class="rc-tag">Free</div><h3>From Visibility to Clients</h3><p>The 10-Day Client Attraction Workbook for service-based businesses. Start getting seen and getting hired.</p></div>
-    <div class="rc"><div class="rc-tag">Free Quiz</div><h3>Marketing Clarity Quiz</h3><p>Not sure where your marketing is leaking? Take our quiz and get a personalised action plan in minutes.</p></div>
-    <div class="rc"><div class="rc-tag">Guide</div><h3>High-Converting Ads Guide</h3><p>Step-by-step guide to setting up winning Meta and Google Ads that actually drive leads and bookings.</p></div>
-    <div class="rc"><div class="rc-tag">Playbook</div><h3>Auto-DM Your Way to Sales</h3><p>Instagram DM automation playbook for small and medium business owners ready to close clients on autopilot.</p></div>
-    <div class="rc"><div class="rc-tag">Guide</div><h3>Instagram Comment Automation</h3><p>ManyChat for Beginners — turn every comment into a lead automatically with this step-by-step guide.</p></div>
-    <div class="rc"><div class="rc-tag">EBook</div><h3>10 AI Tools for SMBs</h3><p>The AI tools that turn small business owners into powerhouse content machines — without the burnout.</p></div>
+    <div class="rc sa-left sa-hidden sa-d1"><div class="rc-tag">Free</div><h3>From Visibility to Clients</h3><p>The 10-Day Client Attraction Workbook for service-based businesses. Start getting seen and getting hired.</p></div>
+    <div class="rc sa-up sa-hidden sa-d2"><div class="rc-tag">Free Quiz</div><h3>Marketing Clarity Quiz</h3><p>Not sure where your marketing is leaking? Take our quiz and get a personalised action plan in minutes.</p></div>
+    <div class="rc sa-right sa-hidden sa-d3"><div class="rc-tag">Guide</div><h3>High-Converting Ads Guide</h3><p>Step-by-step guide to setting up winning Meta and Google Ads that actually drive leads and bookings.</p></div>
+    <div class="rc sa-left sa-hidden sa-d4"><div class="rc-tag">Playbook</div><h3>Auto-DM Your Way to Sales</h3><p>Instagram DM automation playbook for small and medium business owners ready to close clients on autopilot.</p></div>
+    <div class="rc sa-up sa-hidden sa-d5"><div class="rc-tag">Guide</div><h3>Instagram Comment Automation</h3><p>ManyChat for Beginners — turn every comment into a lead automatically with this step-by-step guide.</p></div>
+    <div class="rc sa-right sa-hidden sa-d6"><div class="rc-tag">EBook</div><h3>10 AI Tools for SMBs</h3><p>The AI tools that turn small business owners into powerhouse content machines — without the burnout.</p></div>
   </div>
 </section>
 
@@ -859,6 +904,22 @@
     if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
+  /* SCROLL REVEAL — sa-hidden elements animate in on scroll */
+  function saReveal() {
+    var wh = window.innerHeight;
+    var els = document.querySelectorAll('.sa-hidden:not(.sa-visible)');
+    els.forEach(function(el) {
+      if (el.getBoundingClientRect().top < wh - 50) {
+        el.classList.add('sa-visible');
+      }
+    });
+  }
+  saReveal();
+  window.addEventListener('scroll', saReveal, { passive: true });
+  window.addEventListener('load', saReveal);
+  var saTimer = setInterval(saReveal, 300);
+  setTimeout(function() { clearInterval(saTimer); }, 4000);
+
   /* COUNTER — counts up on load */
   function animateCounter(el, target, suffix) {
     var start = 0, duration = 1800;
@@ -876,8 +937,23 @@
       var counter = el.querySelector('.counter');
       var target  = parseInt(el.dataset.target);
       var suffix  = el.dataset.suffix;
-      if (counter && target) animateCounter(counter, target, suffix);
+      if (el.getBoundingClientRect().top < window.innerHeight) {
+        el.classList.add('sa-visible');
+        if (counter && target) animateCounter(counter, target, suffix);
+      }
     });
+    // also trigger on scroll for stats
+    window.addEventListener('scroll', function() {
+      document.querySelectorAll('.stt:not(.sa-visible)').forEach(function(el) {
+        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+          el.classList.add('sa-visible');
+          var counter = el.querySelector('.counter');
+          var target = parseInt(el.dataset.target);
+          var suffix = el.dataset.suffix;
+          if (counter && target) animateCounter(counter, target, suffix);
+        }
+      });
+    }, { passive: true });
   });
 
   /* PARALLAX */
