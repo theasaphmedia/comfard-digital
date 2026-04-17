@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ComfArd Digital — Social Media Management for Service Pros</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:  #0c1c36;
+    --navy2: #112244;
+    --navy3: #0a1628;
+    --coral: #e8604c;
+    --coral2:#f07a68;
+    --white: #ffffff;
+    --muted: #8899bb;
+    --border:rgba(255,255,255,0.09);
+    --F:'Syne',sans-serif;
+    --B:'Inter',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--navy);color:var(--white);font-family:var(--B);overflow-x:hidden}
+
+  /* ════════════════════════════════
+     NAV — changes on scroll via JS
+  ════════════════════════════════ */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.25rem 4rem;
+    background:transparent;
+    transition:background .4s, padding .4s, box-shadow .4s;
+  }
+  nav.scrolled{
+    background:rgba(10,22,40,0.97);
+    backdrop-filter:blur(16px);
+    padding:.85rem 4rem;
+    box-shadow:0 2px 24px rgba(0,0,0,.4);
+    border-bottom:1px solid var(--border);
+  }
+  .logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+  .logo-mark{width:40px;height:40px;border-radius:50%;background:var(--navy2);border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .logo-text{font-family:var(--F);font-size:1rem;font-weight:800;color:var(--white)}
+  .logo-text span{color:var(--coral)}
+  .nav-right{display:flex;align-items:center;gap:2rem}
+  .nav-right a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+  .nav-right a:hover{color:var(--white)}
+  .nav-btn{background:var(--coral)!important;color:var(--white)!important;padding:.6rem 1.3rem;border-radius:2rem;font-weight:600!important;transition:background .2s,transform .2s!important}
+  .nav-btn:hover{background:var(--coral2)!important;transform:scale(1.04)!important}
+
+  /* ════════════════════════════════
+     TOP TESTIMONIAL TICKER
+  ════════════════════════════════ */
+  .top-ticker{margin-top:72px;background:var(--navy2);border-bottom:1px solid var(--border);overflow:hidden;padding:.85rem 0}
+  .tt-track{display:flex;width:max-content;animation:ttick 38s linear infinite}
+  .tt-item{display:flex;align-items:center;gap:.6rem;padding:0 2.5rem;border-right:1px solid var(--border);white-space:nowrap}
+  .tt-stars{color:#f5c518;font-size:.75rem}
+  .tt-name{font-family:var(--F);font-size:.82rem;font-weight:700}
+  .tt-quote{color:var(--muted);font-size:.8rem;font-style:italic}
+  @keyframes ttick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* ════════════════════════════════
+     HERO
+  ════════════════════════════════ */
+  .hero{
+    padding:4.5rem 4rem 5rem;
+    display:grid;grid-template-columns:1fr 420px;
+    gap:4rem;align-items:center;
+    position:relative;overflow:hidden;min-height:90vh;
+  }
+  .hero-glow{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 75% at 90% 45%,rgba(232,96,76,.14) 0%,transparent 65%)}
+  .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+
+  /* Parallax layer */
+  .hero-parallax{position:absolute;inset:0;z-index:0;will-change:transform}
+
+  .hero-left{position:relative;z-index:1}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:rgba(232,96,76,.12);border:1px solid rgba(232,96,76,.25);
+    color:var(--coral2);font-size:.72rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    padding:.4rem .9rem;border-radius:2rem;margin-bottom:1.75rem;
+    opacity:0;animation:fadeUp .6s .1s ease forwards;
+  }
+  .hero-eyebrow::before{content:'●';font-size:.45rem;animation:blink 1.4s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+  /* Word-by-word headline reveal */
+  .hero h1{
+    font-family:var(--F);
+    font-size:clamp(3rem,5.5vw,5.8rem);
+    font-weight:800;line-height:.95;
+    letter-spacing:-.04em;margin-bottom:1.5rem;
+  }
+  .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+  .word-inner{display:inline-block;transform:translateY(110%);animation:wordUp .65s ease forwards}
+  .hero h1 .accent{color:var(--coral)}
+  .hero h1 .dim{color:rgba(255,255,255,.45);font-size:clamp(1.5rem,2.8vw,2.8rem)}
+
+  .hero-desc{color:rgba(255,255,255,.6);font-size:1.05rem;line-height:1.8;max-width:520px;margin-bottom:2.25rem;opacity:0;animation:fadeUp .6s .7s ease forwards}
+
+  .hero-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2rem;opacity:0;animation:fadeUp .6s .85s ease forwards}
+  .pill{background:rgba(255,255,255,.06);border:1px solid var(--border);color:rgba(255,255,255,.75);font-size:.8rem;font-weight:500;padding:.45rem .9rem;border-radius:2rem;text-decoration:none;transition:background .25s,border-color .25s,color .25s,transform .2s}
+  .pill:hover{background:rgba(232,96,76,.18);border-color:var(--coral);color:var(--white);transform:translateY(-2px)}
+
+  .hero-ctas{display:flex;gap:.85rem;align-items:center;opacity:0;animation:fadeUp .6s 1s ease forwards}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;padding:.95rem 2rem;border-radius:2rem;font-size:.95rem;transition:.25s;cursor:pointer}
+  .btn-coral{background:var(--coral);color:var(--white);box-shadow:0 4px 24px rgba(232,96,76,.35)}
+  .btn-coral:hover{background:var(--coral2);transform:translateY(-3px);box-shadow:0 10px 36px rgba(232,96,76,.5)}
+  .btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.22)}
+  .btn-outline:hover{border-color:rgba(255,255,255,.7);transform:translateY(-2px)}
+
+  /* Hero right card */
+  .hero-right{position:relative;z-index:1}
+  .founder-card{background:var(--navy2);border:1px solid var(--border);border-radius:1.5rem;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.45);opacity:0;animation:fadeUp .7s .4s ease forwards}
+  .founder-img-wrap{width:100%;height:280px;overflow:hidden;background:linear-gradient(135deg,#1a3060,#0c1c36);display:flex;align-items:center;justify-content:center;position:relative}
+  .founder-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--navy2),transparent)}
+  .founder-avatar{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--coral),#c0392b);display:flex;align-items:center;justify-content:center;font-family:var(--F);font-size:4rem;font-weight:800;color:white;box-shadow:0 16px 48px rgba(232,96,76,.4)}
+  .founder-body{padding:1.5rem}
+  .founder-name{font-family:var(--F);font-size:1.15rem;font-weight:800;margin-bottom:.2rem}
+  .founder-title{color:var(--coral2);font-size:.8rem;font-weight:500;margin-bottom:1rem}
+  .founder-quote{color:rgba(255,255,255,.65);font-size:.88rem;line-height:1.7;font-style:italic;border-left:3px solid var(--coral);padding-left:.85rem;margin-bottom:1.1rem}
+  .founder-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .fstat{background:rgba(255,255,255,.05);border-radius:.75rem;padding:.65rem .5rem;text-align:center}
+  .fstat-n{font-family:var(--F);font-size:1.1rem;font-weight:800;color:var(--coral)}
+  .fstat-l{font-size:.63rem;color:var(--muted);margin-top:.1rem}
+
+  /* Float badges */
+  .fb{position:absolute;background:rgba(17,34,68,.95);border:1px solid rgba(255,255,255,.15);border-radius:.85rem;padding:.6rem .95rem;display:flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);white-space:nowrap;z-index:2;backdrop-filter:blur(8px)}
+  .fb1{top:-1rem;left:-2rem;animation:float 3.5s ease-in-out infinite}
+  .fb2{bottom:3rem;right:-1.5rem;animation:float 3.5s 1.8s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  /* ════════════════════════════════
+     SERVICE TICKER
+  ════════════════════════════════ */
+  .ticker{overflow:hidden;background:var(--coral);padding:.75rem 0}
+  .t-track{display:flex;gap:3rem;width:max-content;animation:tk 28s linear infinite}
+  .t-item{font-weight:700;font-size:.78rem;color:rgba(255,255,255,.92);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+  .tdot{opacity:.5;margin-left:.6rem}
+  @keyframes tk{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* ════════════════════════════════
+     SHARED SECTION
+  ════════════════════════════════ */
+  .sec{padding:6rem 4rem}
+  .sl{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:.85rem}
+  .sh{font-family:var(--F);font-size:clamp(2rem,3.5vw,3rem);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+  .sh em{font-style:normal;color:var(--coral)}
+
+  /* ════════════════════════════════
+     SCROLL ANIMATION CLASSES
+  ════════════════════════════════ */
+
+  /* 1. Fade + Rise */
+  .anim{opacity:0;transform:translateY(40px);transition:opacity .75s ease,transform .75s ease}
+  .anim.on{opacity:1;transform:none}
+
+  /* 2. Slide LEFT */
+  .anim-left{opacity:0;transform:translateX(-70px);transition:opacity .75s cubic-bezier(.25,.46,.45,.94),transform .75s cubic-bezier(.25,.46,.45,.94)}
+  .anim-left.on{opacity:1;transform:none}
+
+  /* 3. Slide RIGHT */
+  .anim-right{opacity:0;transform:translateX(70px);transition:opacity .75s cubic-bezier(.25,.46,.45,.94),transform .75s cubic-bezier(.25,.46,.45,.94)}
+  .anim-right.on{opacity:1;transform:none}
+
+  /* 4. Scale / Zoom in with spring */
+  .anim-scale{opacity:0;transform:scale(.82);transition:opacity .7s ease,transform .7s cubic-bezier(.34,1.56,.64,1)}
+  .anim-scale.on{opacity:1;transform:scale(1)}
+
+  /* 5. 3D Flip in */
+  .anim-flip{opacity:0;transform:perspective(600px) rotateX(22deg) translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.25,.46,.45,.94)}
+  .anim-flip.on{opacity:1;transform:perspective(600px) rotateX(0) translateY(0)}
+
+  /* 6. Blur in */
+  .anim-blur{opacity:0;filter:blur(14px);transform:translateY(16px);transition:opacity .85s ease,filter .85s ease,transform .85s ease}
+  .anim-blur.on{opacity:1;filter:blur(0);transform:none}
+
+  /* 7. Light up */
+  .anim-light{opacity:0;filter:brightness(.15) saturate(.3);transition:opacity 1s ease,filter 1s ease}
+  .anim-light.on{opacity:1;filter:brightness(1) saturate(1)}
+
+  /* 8. Skew slide LEFT */
+  .anim-skew-left{opacity:0;transform:translateX(-60px) skewX(10deg);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
+  .anim-skew-left.on{opacity:1;transform:none}
+
+  /* 9. Skew slide RIGHT */
+  .anim-skew-right{opacity:0;transform:translateX(60px) skewX(-10deg);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
+  .anim-skew-right.on{opacity:1;transform:none}
+
+  /* 10. Squeeze / expand from bottom */
+  .anim-squeeze{opacity:0;transform:scaleY(.25) translateY(20px);transform-origin:bottom;transition:opacity .65s ease,transform .7s cubic-bezier(.34,1.5,.64,1)}
+  .anim-squeeze.on{opacity:1;transform:none}
+
+  /* 11. Bounce in (elastic) */
+  .anim-bounce{opacity:0;transform:translateY(55px);transition:opacity .5s ease,transform .85s cubic-bezier(.34,1.8,.64,1)}
+  .anim-bounce.on{opacity:1;transform:none}
+
+  /* 12. Clip / curtain reveal */
+  .anim-clip{position:relative;overflow:hidden;display:block}
+  .anim-clip .clip-inner{transform:translateY(105%);display:block;transition:transform .82s cubic-bezier(.77,0,.175,1)}
+  .anim-clip.on .clip-inner{transform:translateY(0)}
+
+  /* 13. Rotate in from bottom-left */
+  .anim-rotate{opacity:0;transform:rotate(-8deg) translateY(40px) translateX(-20px);transform-origin:bottom left;transition:opacity .8s ease,transform .8s cubic-bezier(.34,1.3,.64,1)}
+  .anim-rotate.on{opacity:1;transform:none}
+
+  /* 14. Zoom out (starts huge → normal) */
+  .anim-zoom-out{opacity:0;transform:scale(1.25);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
+  .anim-zoom-out.on{opacity:1;transform:scale(1)}
+
+  /* 15. Slide UP fast (for small labels/tags) */
+  .anim-up-fast{opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s cubic-bezier(.34,1.4,.64,1)}
+  .anim-up-fast.on{opacity:1;transform:none}
+
+  /* 16. Fade only (for subtle elements) */
+  .anim-fade{opacity:0;transition:opacity 1s ease}
+  .anim-fade.on{opacity:1}
+
+  /* 17. Pulse glow on arrival */
+  .anim-glow{opacity:0;transition:opacity .6s ease,box-shadow .6s ease}
+  .anim-glow.on{opacity:1;animation:pulseGlow 1.2s .3s ease forwards}
+  @keyframes pulseGlow{
+    0%{box-shadow:0 0 0 rgba(232,96,76,0)}
+    40%{box-shadow:0 0 40px rgba(232,96,76,.5)}
+    100%{box-shadow:0 0 0 rgba(232,96,76,0)}
+  }
+
+  /* 18. Swing in from top */
+  .anim-swing{opacity:0;transform:rotateX(-45deg) translateY(-30px);transform-origin:top;transition:opacity .7s ease,transform .75s cubic-bezier(.34,1.3,.64,1)}
+  .anim-swing.on{opacity:1;transform:none}
+
+  /* Stagger delays — more steps */
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+  .d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+  .d7{transition-delay:.56s}.d8{transition-delay:.64s}.d9{transition-delay:.72s}
+
+  /* ── Continuous pulse on coral elements ── */
+  @keyframes coralPulse{0%,100%{box-shadow:0 0 0 rgba(232,96,76,0)}50%{box-shadow:0 0 20px rgba(232,96,76,.25)}}
+  .pulse{animation:coralPulse 3s ease-in-out infinite}
+
+  /* ── Typewriter cursor for section labels ── */
+  .typewriter{border-right:2px solid var(--coral);padding-right:2px;animation:cursorBlink .8s step-end infinite}
+  @keyframes cursorBlink{0%,100%{border-color:var(--coral)}50%{border-color:transparent}}
+
+  /* ════════════════════════════════
+     STATS — counting numbers
+  ════════════════════════════════ */
+  .stats-sec{background:var(--navy2);padding:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .stats-row{display:grid;grid-template-columns:repeat(3,1fr)}
+  .stt{padding:3rem 2rem;text-align:center;border-right:1px solid var(--border);opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .stt.on{opacity:1;transform:none}
+  .stt:last-child{border-right:none}
+  .stt-sub{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--coral);opacity:.7;margin-bottom:.4rem}
+  .stt-n{font-family:var(--F);font-size:clamp(2.8rem,4.5vw,4.8rem);font-weight:800;color:var(--coral);line-height:1;letter-spacing:-.04em}
+  .stt-l{color:rgba(255,255,255,.48);font-size:.85rem;margin-top:.35rem}
+
+  /* ════════════════════════════════
+     ABOUT
+  ════════════════════════════════ */
+  .about-sec{background:var(--navy)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+  .about-img-box{border-radius:1.5rem;overflow:hidden;background:linear-gradient(135deg,var(--navy2),#0a1628);height:480px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);position:relative}
+  .about-img-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(232,96,76,.08) 0%,transparent 70%)}
+  .about-avatar{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,var(--coral),#a93226);display:flex;align-items:center;justify-content:center;font-family:var(--F);font-size:5rem;font-weight:800;color:white;box-shadow:0 24px 60px rgba(232,96,76,.35);position:relative;z-index:1}
+  .about-text h2{font-family:var(--F);font-size:clamp(1.9rem,2.8vw,2.6rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.25rem}
+  .about-text h2 em{font-style:normal;color:var(--coral)}
+  .about-text p{color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:1.25rem;font-size:.97rem}
+  .about-links{display:flex;flex-direction:column;gap:.5rem;margin-bottom:2rem}
+  .about-link{display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.72);text-decoration:none;font-size:.9rem;font-weight:500;padding:.6rem 0;border-bottom:1px solid var(--border);transition:color .2s,padding-left .2s}
+  .about-link:hover{color:var(--coral);padding-left:.5rem}
+  .about-link-num{font-family:var(--F);font-size:.7rem;color:var(--coral);font-weight:700;letter-spacing:.08em}
+
+  /* ════════════════════════════════
+     SERVICES
+  ════════════════════════════════ */
+  .srv-sec{background:var(--navy2)}
+  .srv-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.75rem;gap:2rem}
+  .srv-head p{color:rgba(255,255,255,.5);max-width:360px;line-height:1.75;font-size:.95rem}
+  .srv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:1.25rem;overflow:hidden;border:1px solid var(--border)}
+  .sc{
+    background:var(--navy);padding:2.5rem;
+    text-decoration:none;color:inherit;display:block;
+    transition:background .3s,border-color .3s;
+    position:relative;overflow:hidden;
+  }
+  /* Glow border on hover */
+  .sc::before{content:'';position:absolute;inset:0;border:1.5px solid transparent;border-radius:0;transition:border-color .3s;pointer-events:none}
+  .sc:hover{background:#0f2245}
+  .sc:hover::before{border-color:rgba(232,96,76,.4)}
+  /* Shine sweep on hover */
+  .sc::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transition:left .5s ease;pointer-events:none}
+  .sc:hover::after{left:150%}
+  .sc-num{font-size:.68rem;font-weight:700;color:var(--coral);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+  .sc h3{font-family:var(--F);font-size:1.3rem;font-weight:800;margin-bottom:.65rem;letter-spacing:-.02em}
+  .sc p{color:rgba(255,255,255,.5);line-height:1.75;font-size:.9rem}
+  .sc-arr{display:inline-flex;align-items:center;gap:.4rem;color:var(--coral);font-size:.8rem;font-weight:600;margin-top:1.1rem;transition:gap .25s}
+  .sc:hover .sc-arr{gap:.85rem}
+
+  /* ════════════════════════════════
+     PORTFOLIO
+  ════════════════════════════════ */
+  .port-sec{background:var(--navy)}
+  .port-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.75rem;gap:2rem}
+  .port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .pc{border-radius:1.15rem;overflow:hidden;background:var(--navy2);border:1px solid var(--border);text-decoration:none;color:inherit;display:block;transition:transform .3s,border-color .3s,box-shadow .3s}
+  .pc:hover{transform:translateY(-8px) scale(1.01);border-color:rgba(232,96,76,.4);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .pc-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;transition:transform .4s ease}
+  .pc:hover .pc-img{transform:scale(1.06)}
+  .pc-img-beauty{background:linear-gradient(135deg,#2d1b3d,#1a0f2e)}
+  .pc-img-realty{background:linear-gradient(135deg,#0d2b1a,#061a10)}
+  .pc-img-health{background:linear-gradient(135deg,#1a2b0d,#0f1f06)}
+  .pc-body{padding:1.35rem}
+  .pc-tag{display:inline-block;background:rgba(232,96,76,.14);color:var(--coral2);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .65rem;border-radius:2rem;margin-bottom:.65rem}
+  .pc h3{font-family:var(--F);font-size:1rem;font-weight:800;margin-bottom:.3rem}
+  .pc-result{color:var(--coral);font-size:.8rem;font-weight:600}
+  .pc-desc{color:rgba(255,255,255,.45);font-size:.82rem;line-height:1.6;margin-top:.35rem}
+
+  /* ════════════════════════════════
+     TESTIMONIALS
+  ════════════════════════════════ */
+  .testi-sec{background:var(--navy2)}
+  .testi-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.75rem;gap:2rem}
+  .testi-intro p{color:rgba(255,255,255,.5);max-width:360px;line-height:1.75;font-size:.95rem}
+  .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem}
+  .tc{
+    background:var(--navy);border:1px solid var(--border);
+    border-radius:1.15rem;padding:1.85rem;
+    transition:border-color .3s,transform .3s,box-shadow .3s;
+    position:relative;overflow:hidden;
+  }
+  .tc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+  .tc:hover{border-color:rgba(232,96,76,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+  .tc:hover::before{transform:scaleX(1)}
+  .tc-stars{color:#f5c518;font-size:.85rem;margin-bottom:.85rem}
+  .tc-name{font-family:var(--F);font-size:1.05rem;font-weight:800;color:var(--coral);margin-bottom:.25rem}
+  .tc-quote{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.75;margin-bottom:1.25rem;font-style:italic}
+  .tc-role{color:var(--muted);font-size:.75rem}
+
+  /* ════════════════════════════════
+     HOW IT WORKS
+  ════════════════════════════════ */
+  .how-sec{background:var(--navy)}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.75rem}
+  .hw{background:var(--navy2);border:1px solid var(--border);border-radius:1.15rem;padding:2.25rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+  .hw::before{content:attr(data-n);position:absolute;top:-1.5rem;right:.75rem;font-family:var(--F);font-size:7.5rem;font-weight:800;color:rgba(232,96,76,.05);line-height:1;pointer-events:none;transition:color .3s}
+  .hw:hover{border-color:rgba(232,96,76,.3);transform:translateY(-4px)}
+  .hw:hover::before{color:rgba(232,96,76,.1)}
+  .hw-num{font-size:.68rem;font-weight:700;color:var(--coral);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+  .hw h3{font-family:var(--F);font-size:1.2rem;font-weight:800;margin-bottom:.65rem;letter-spacing:-.02em}
+  .hw p{color:rgba(255,255,255,.5);font-size:.9rem;line-height:1.7}
+
+  /* ════════════════════════════════
+     RESOURCES
+  ════════════════════════════════ */
+  .res-sec{background:var(--navy2)}
+  .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem;margin-top:2.75rem}
+  .rc{background:var(--navy);border:1px solid var(--border);border-radius:1.15rem;padding:1.75rem;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+  .rc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(232,96,76,.07),transparent 70%);opacity:0;transition:opacity .3s}
+  .rc:hover{border-color:rgba(232,96,76,.35);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+  .rc:hover::after{opacity:1}
+  .rc-tag{display:inline-block;background:rgba(232,96,76,.14);color:var(--coral2);font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:2rem;margin-bottom:.9rem}
+  .rc h3{font-family:var(--F);font-size:1rem;font-weight:800;line-height:1.3;margin-bottom:.45rem}
+  .rc p{color:rgba(255,255,255,.46);font-size:.85rem;line-height:1.6}
+
+  /* ════════════════════════════════
+     CTA
+  ════════════════════════════════ */
+  .cta-sec{background:var(--navy2);text-align:center;padding:9rem 4rem;position:relative;overflow:hidden}
+  .cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(232,96,76,.1) 0%,transparent 70%)}
+  .cta-sec .sh{font-size:clamp(2.5rem,5vw,4.2rem);margin-bottom:1.1rem;position:relative}
+  .cta-sec .sub{color:rgba(255,255,255,.55);max-width:500px;margin:0 auto 2.5rem;line-height:1.8;position:relative;font-size:1rem}
+  .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+  /* ════════════════════════════════
+     SOCIAL + FOOTER
+  ════════════════════════════════ */
+  .sbar{background:#0a1628;border-top:1px solid var(--border);padding:.9rem 4rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+  .sbar-label{color:rgba(255,255,255,.32);font-size:.7rem;text-transform:uppercase;letter-spacing:.15em}
+  .sbl{color:rgba(255,255,255,.52);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s,transform .2s;display:inline-flex;align-items:center;gap:.35rem}
+  .sbl:hover{color:var(--coral);transform:translateY(-2px)}
+
+  footer{background:var(--navy);border-top:1px solid var(--border);padding:2.75rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+  .ft-name{font-family:var(--F);font-weight:800;font-size:1.15rem}
+  .ft-name span{color:var(--coral)}
+  .ft-tag{color:var(--muted);font-size:.78rem;max-width:260px;line-height:1.5;margin-top:.3rem}
+  .ft-links{display:flex;gap:1.75rem}
+  .ft-links a{color:var(--muted);text-decoration:none;font-size:.82rem;transition:color .2s}
+  .ft-links a:hover{color:var(--coral)}
+  .ft-copy{color:var(--muted);font-size:.78rem}
+
+  /* ════════════════════════════════
+     KEYFRAMES
+  ════════════════════════════════ */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+
+  /* ════════════════════════════════
+     HAMBURGER BUTTON
+  ════════════════════════════════ */
+  .burger{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    gap:5px;width:42px;height:42px;border-radius:10px;
+    background:rgba(255,255,255,.07);border:1px solid var(--border);
+    cursor:pointer;transition:background .2s,border-color .2s;
+    flex-shrink:0;
+  }
+  .burger:hover{background:rgba(232,96,76,.15);border-color:rgba(232,96,76,.3)}
+  .burger-line{
+    display:block;width:20px;height:2px;
+    background:var(--white);border-radius:2px;
+    transform-origin:center;
+    transition:transform .4s cubic-bezier(.77,0,.175,1),
+               opacity   .3s ease,
+               width     .3s ease;
+  }
+  /* Animate to X when open */
+  .burger.open .burger-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open .burger-line:nth-child(2){opacity:0;transform:scaleX(0)}
+  .burger.open .burger-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ════════════════════════════════
+     FULL-SCREEN DRAWER
+  ════════════════════════════════ */
+  .drawer{
+    position:fixed;inset:0;z-index:500;
+    pointer-events:none;
+  }
+  .drawer.open{pointer-events:all}
+
+  /* Dark overlay */
+  .drawer-bg{
+    position:absolute;inset:0;
+    background:rgba(6,12,26,.75);
+    backdrop-filter:blur(6px);
+    opacity:0;
+    transition:opacity .45s ease;
+  }
+  .drawer.open .drawer-bg{opacity:1}
+
+  /* Slide-in panel from right */
+  .drawer-inner{
+    position:absolute;top:0;right:0;bottom:0;
+    width:min(480px,100vw);
+    background:var(--navy2);
+    border-left:1px solid var(--border);
+    display:flex;flex-direction:column;
+    padding:2.5rem 3rem;
+    transform:translateX(100%);
+    transition:transform .55s cubic-bezier(.77,0,.175,1);
+    overflow-y:auto;
+  }
+  .drawer.open .drawer-inner{transform:translateX(0)}
+
+  /* Close button */
+  .drawer-close{
+    position:absolute;top:1.5rem;right:1.75rem;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.06);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:background .2s,transform .3s;
+  }
+  .drawer-close:hover{background:rgba(232,96,76,.2);transform:rotate(90deg)}
+
+  /* Nav links inside drawer */
+  .drawer-nav{
+    margin-top:5rem;
+    display:flex;flex-direction:column;gap:0;
+    flex:1;
+  }
+  .drawer-link{
+    display:flex;align-items:center;gap:1.25rem;
+    text-decoration:none;color:rgba(255,255,255,.55);
+    padding:1.1rem 0;
+    border-bottom:1px solid var(--border);
+    transition:color .25s, padding-left .25s;
+    position:relative;overflow:hidden;
+    /* staggered slide-in per link */
+    opacity:0;transform:translateX(40px);
+    transition:opacity .45s ease, transform .45s ease, color .25s, padding-left .25s;
+  }
+  .drawer.open .drawer-link{opacity:1;transform:translateX(0)}
+  .drawer.open .drawer-link:nth-child(1){transition-delay:.15s}
+  .drawer.open .drawer-link:nth-child(2){transition-delay:.22s}
+  .drawer.open .drawer-link:nth-child(3){transition-delay:.29s}
+  .drawer.open .drawer-link:nth-child(4){transition-delay:.36s}
+  .drawer.open .drawer-link:nth-child(5){transition-delay:.43s}
+
+  .drawer-link:hover{color:var(--white);padding-left:.75rem}
+  .drawer-link:hover .drawer-arrow{opacity:1;transform:translateX(0)}
+
+  /* Coral sweep on hover */
+  .drawer-link::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--coral);transform:scaleY(0);transform-origin:bottom;
+    transition:transform .3s ease;
+  }
+  .drawer-link:hover::before{transform:scaleY(1)}
+
+  .drawer-num{
+    font-family:var(--F);font-size:.7rem;font-weight:700;
+    color:var(--coral);letter-spacing:.12em;min-width:28px;
+  }
+  .drawer-label{
+    font-family:var(--F);font-size:2rem;font-weight:800;
+    letter-spacing:-.03em;flex:1;
+    transition:color .25s;
+  }
+  .drawer-link:hover .drawer-label{color:var(--coral)}
+  .drawer-arrow{
+    font-size:1.4rem;color:var(--coral);
+    opacity:0;transform:translateX(-8px);
+    transition:opacity .25s,transform .25s;
+  }
+
+  /* Footer inside drawer */
+  .drawer-footer{
+    margin-top:auto;padding-top:2rem;
+    opacity:0;transform:translateY(16px);
+    transition:opacity .45s .5s ease, transform .45s .5s ease;
+  }
+  .drawer.open .drawer-footer{opacity:1;transform:none}
+  .drawer-cta{
+    display:inline-block;
+    background:var(--coral);color:var(--white);
+    padding:.85rem 1.75rem;border-radius:2rem;
+    font-weight:700;font-size:.9rem;text-decoration:none;
+    margin-bottom:1.5rem;
+    transition:background .2s,transform .2s;
+  }
+  .drawer-cta:hover{background:var(--coral2);transform:translateY(-2px)}
+  .drawer-socials{
+    display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.25rem;
+  }
+  .drawer-socials a{
+    color:var(--muted);text-decoration:none;font-size:.82rem;
+    font-weight:500;transition:color .2s;
+  }
+  .drawer-socials a:hover{color:var(--coral)}
+  .drawer-tagline{
+    color:rgba(255,255,255,.3);font-size:.78rem;
+    line-height:1.6;font-style:italic;
+  }
+
+  /* ════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════ */
+  @media(max-width:960px){
+    nav,nav.scrolled{padding:.9rem 1.5rem}
+    .nav-right a:not(.nav-btn){display:none}
+    .sec,footer,.sbar{padding-left:1.5rem;padding-right:1.5rem}
+    .hero{grid-template-columns:1fr;padding:2rem 1.5rem 4rem;min-height:auto}
+    .hero-right{display:none}
+    .stats-row{grid-template-columns:1fr 1fr}
+    .stt{border-bottom:1px solid var(--border)}
+    .about-grid,.srv-grid,.port-grid,.tg,.how-grid,.res-grid{grid-template-columns:1fr}
+    .srv-head,.testi-intro,.port-header{flex-direction:column}
+    footer{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9c1.8 0 3.47-.53 4.87-1.44L14.5 17.2c-.87.54-1.9.8-3 .8C8.69 18 6 15.31 6 12s2.69-6 5.5-6c1.1 0 2.13.26 3 .8L16.87 4.44C15.47 3.53 13.8 3 12 3z" fill="#e8604c"/>
+        <path d="M17 3l7 18h-3.5l-1.4-4h-4.2L13.5 21H10L17 3zm0 6l-1.5 5h3L17 9z" fill="white"/>
+      </svg>
+    </div>
+    <span class="logo-text">ComfArd <span>Digital</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-btn">Book Free Call</a>
+    <!-- Hamburger -->
+    <button class="burger" id="burgerBtn" aria-label="Open menu">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- FULLSCREEN DRAWER MENU -->
+<div class="drawer" id="drawer">
+  <div class="drawer-bg"></div>
+  <div class="drawer-inner">
+    <!-- Close button -->
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <line x1="4" y1="4" x2="24" y2="24" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="24" y1="4" x2="4" y2="24" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Nav links -->
+    <nav class="drawer-nav">
+      <a href="#" class="drawer-link" data-index="0">
+        <span class="drawer-num">01</span>
+        <span class="drawer-label">Home</span>
+        <span class="drawer-arrow">→</span>
+      </a>
+      <a href="#about" class="drawer-link" data-index="1">
+        <span class="drawer-num">02</span>
+        <span class="drawer-label">About</span>
+        <span class="drawer-arrow">→</span>
+      </a>
+      <a href="#services" class="drawer-link" data-index="2">
+        <span class="drawer-num">03</span>
+        <span class="drawer-label">Services</span>
+        <span class="drawer-arrow">→</span>
+      </a>
+      <a href="#portfolio" class="drawer-link" data-index="3">
+        <span class="drawer-num">04</span>
+        <span class="drawer-label">Our Work</span>
+        <span class="drawer-arrow">→</span>
+      </a>
+      <a href="#contact" class="drawer-link" data-index="4">
+        <span class="drawer-num">05</span>
+        <span class="drawer-label">Book a Call</span>
+        <span class="drawer-arrow">→</span>
+      </a>
+    </nav>
+
+    <!-- Bottom info -->
+    <div class="drawer-footer">
+      <a href="https://linktr.ee/comfarddigital" target="_blank" class="drawer-cta">Book Your Free Clarity Session →</a>
+      <div class="drawer-socials">
+        <a href="https://www.instagram.com/comfarddigital" target="_blank">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+        <a href="#">YouTube</a>
+      </div>
+      <p class="drawer-tagline">"Helping service-based business pros convert social media into client magnets."</p>
+    </div>
+  </div>
+</div>
+
+<!-- TOP TESTIMONIAL TICKER -->
+<div class="top-ticker">
+  <div class="tt-track">
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Adaeze O.</span><span class="tt-quote">"Booked out 2 months in advance within 6 weeks"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Chukwuemeka B.</span><span class="tt-quote">"Ads paid for the service 3x over in the first month"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Temi A.</span><span class="tt-quote">"4 discovery calls booked while I was asleep"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Ngozi F.</span><span class="tt-quote">"Finally understand what real social media strategy means"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Adaeze O.</span><span class="tt-quote">"Booked out 2 months in advance within 6 weeks"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Chukwuemeka B.</span><span class="tt-quote">"Ads paid for the service 3x over in the first month"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Temi A.</span><span class="tt-quote">"4 discovery calls booked while I was asleep"</span></div>
+    <div class="tt-item"><span class="tt-stars">★★★★★</span><span class="tt-name">Ngozi F.</span><span class="tt-quote">"Finally understand what real social media strategy means"</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-parallax" id="parallaxBg"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">✦ Social Media Management for Service Pros</div>
+    <h1>
+      <span class="word"><span class="word-inner" style="animation-delay:.2s">We</span></span>&#32;
+      <span class="word"><span class="word-inner" style="animation-delay:.28s">build</span></span>&#32;
+      <span class="word"><span class="word-inner" style="animation-delay:.36s">brands</span></span><br>
+      <span class="accent">
+        <span class="word"><span class="word-inner" style="animation-delay:.44s">that</span></span>&#32;
+        <span class="word"><span class="word-inner" style="animation-delay:.52s">convert</span></span>
+      </span><br>
+      <span class="dim">
+        <span class="word"><span class="word-inner" style="animation-delay:.6s">on</span></span>&#32;
+        <span class="word"><span class="word-inner" style="animation-delay:.67s">social</span></span>&#32;
+        <span class="word"><span class="word-inner" style="animation-delay:.74s">media.</span></span>
+      </span>
+    </h1>
+    <p class="hero-desc">ComfArd Digital helps service-based business professionals turn their social media into a consistent, powerful client-attraction machine — empowering founders and in-house teams to grow.</p>
+    <div class="hero-pills">
+      <a href="#services" class="pill">Social Media</a>
+      <a href="#services" class="pill">Video Production</a>
+      <a href="#services" class="pill">Ad Management</a>
+      <a href="#services" class="pill">Automation</a>
+    </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-coral">Free Clarity Session</a>
+      <a href="#portfolio" class="btn btn-outline">Browse Our Work →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="fb fb1">📈 Visibility → Clients</div>
+    <div class="founder-card">
+      <div class="founder-img-wrap">
+        <div class="founder-avatar">MA</div>
+      </div>
+      <div class="founder-body">
+        <div class="founder-name anim-swing">Monisola Ayodeji-Falade</div>
+        <div class="founder-title anim-fade d2">Founder — ComfArd Digital · Winnipeg, Canada</div>
+        <div class="founder-quote anim-blur d3">"Helping service-based business pros convert social media into client magnets!"</div>
+        <div class="founder-stats">
+          <div class="fstat anim-bounce d4"><div class="fstat-n">100+</div><div class="fstat-l">Clients</div></div>
+          <div class="fstat anim-bounce d5"><div class="fstat-n">6+</div><div class="fstat-l">Resources</div></div>
+          <div class="fstat anim-bounce d6"><div class="fstat-n">3x</div><div class="fstat-l">Avg Growth</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fb fb2">🎯 Strategy That Converts</div>
+  </div>
+</section>
+
+<!-- SERVICE TICKER -->
+<div class="ticker">
+  <div class="t-track">
+    <span class="t-item">Social Media Management <span class="tdot">✦</span></span>
+    <span class="t-item">Graphics Design <span class="tdot">✦</span></span>
+    <span class="t-item">Video Editing <span class="tdot">✦</span></span>
+    <span class="t-item">Meta & Google Ads <span class="tdot">✦</span></span>
+    <span class="t-item">ManyChat Automation <span class="tdot">✦</span></span>
+    <span class="t-item">Marketing Courses <span class="tdot">✦</span></span>
+    <span class="t-item">Client Attraction Systems <span class="tdot">✦</span></span>
+    <span class="t-item">Social Media Management <span class="tdot">✦</span></span>
+    <span class="t-item">Graphics Design <span class="tdot">✦</span></span>
+    <span class="t-item">Video Editing <span class="tdot">✦</span></span>
+    <span class="t-item">Meta & Google Ads <span class="tdot">✦</span></span>
+    <span class="t-item">ManyChat Automation <span class="tdot">✦</span></span>
+    <span class="t-item">Marketing Courses <span class="tdot">✦</span></span>
+    <span class="t-item">Client Attraction Systems <span class="tdot">✦</span></span>
+  </div>
+</div>
+
+<!-- STATS with counting numbers -->
+<section class="stats-sec">
+  <div class="stats-row">
+    <div class="stt anim-bounce" data-target="100" data-suffix="+">
+      <div class="stt-sub anim-up-fast d2">Serving</div>
+      <div class="stt-n counter">0+</div>
+      <div class="stt-l anim-fade d4">Service Businesses Transformed</div>
+    </div>
+    <div class="stt anim-bounce d3" data-target="3" data-suffix="x">
+      <div class="stt-sub anim-up-fast d4">Average</div>
+      <div class="stt-n counter">0x</div>
+      <div class="stt-l anim-fade d6">Lead Growth in First 90 Days</div>
+    </div>
+    <div class="stt anim-bounce d5" data-target="5" data-suffix="★">
+      <div class="stt-sub anim-up-fast d6">Rated</div>
+      <div class="stt-n counter">0★</div>
+      <div class="stt-l anim-fade d8">Client Satisfaction Across the Board</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-sec sec">
+  <div class="about-grid">
+    <div class="anim-left">
+      <div class="about-img-box">
+        <div class="about-avatar">MA</div>
+      </div>
+    </div>
+    <div class="anim-right">
+      <span class="sl anim-skew-left">About ComfArd Digital</span>
+      <h2 class="about-text" style="font-family:var(--F);font-size:clamp(1.9rem,2.8vw,2.6rem);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.25rem">
+        <span class="anim-clip"><span class="clip-inner">We're in the business of</span></span>
+        <span class="anim-clip d2"><span class="clip-inner" style="color:var(--coral)">authentic connections.</span></span>
+      </h2>
+      <p class="anim d2" style="color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:1.25rem;font-size:.97rem">We're ComfArd Digital — a social media and marketing agency that believes in crafting strategies that not only reach but resonate with your audience. Based in Winnipeg, Canada, we serve service-based businesses remotely across the world.</p>
+      <p class="anim d3" style="color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:1.5rem;font-size:.97rem">We create content that's as engaging as it is on-trend, speaking directly to the hearts of your ideal clients and moving them from followers to booked appointments.</p>
+      <div class="about-links">
+        <a href="#services" class="about-link anim-skew-left d3"><span class="about-link-num">01</span> Social Media Management</a>
+        <a href="#services" class="about-link anim-skew-left d4"><span class="about-link-num">02</span> Video Production & Editing</a>
+        <a href="#services" class="about-link anim-skew-left d5"><span class="about-link-num">03</span> Ad Management</a>
+        <a href="#services" class="about-link anim-skew-left d6"><span class="about-link-num">04</span> Automation & Coaching</a>
+      </div>
+      <a href="#contact" class="btn btn-coral anim-bounce d7" style="display:inline-block">Book a Free Clarity Session →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="srv-sec sec">
+  <div class="srv-head anim-blur">
+    <div>
+      <span class="sl">What We Do</span>
+      <h2 class="sh">Content powered by strategy,<br><em>built to perform.</em></h2>
+    </div>
+    <p>From strategy to execution, we handle every element of your digital presence so your social media becomes your most powerful sales tool.</p>
+  </div>
+  <div class="srv-grid">
+    <div class="sc anim-flip d1"><div class="sc-num">01</div><h3>Social Media Management</h3><p>We strategize, design, caption, schedule, and post for you — so your social media runs consistently without you lifting a finger. Covers Instagram, Facebook, TikTok and more.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc anim-flip d2"><div class="sc-num">02</div><h3>Video Production & Editing</h3><p>We produce visually stunning, audience-focused content that grabs attention and drives engagement, so your brand stays memorable and relevant across all platforms.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc anim-flip d3"><div class="sc-num">03</div><h3>Paid Ads — Meta & Google</h3><p>We create targeted ad campaigns on Meta and Google to get your business qualified leads, increase bookings, and put your brand in front of your ideal clients.</p><div class="sc-arr">Learn more →</div></div>
+    <div class="sc anim-flip d4"><div class="sc-num">04</div><h3>Automation & Coaching</h3><p>ManyChat DM automation systems and coaching sessions to help you build confidence, optimise your social strategy, and convert followers on autopilot.</p><div class="sc-arr">Learn more →</div></div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="port-sec sec">
+  <div class="port-header">
+    <div>
+      <span class="sl anim-skew-left">Client Work</span>
+      <h2 class="sh anim-left">Real results for<br><em>real businesses.</em></h2>
+    </div>
+    <a href="#contact" class="btn btn-outline anim-skew-right" style="white-space:nowrap">Work With Us →</a>
+  </div>
+  <div class="port-grid">
+    <div class="pc anim-scale d1">
+      <div class="pc-img pc-img-beauty">💄</div>
+      <div class="pc-body">
+        <div class="pc-tag anim-up-fast d2">Beauty</div>
+        <h3 class="anim-skew-left d3">Beauty Studio Client Growth</h3>
+        <div class="pc-result anim-glow d4">📈 3x bookings in 60 days</div>
+        <div class="pc-desc anim-fade d5">Full social media management that took a local beauty studio from inconsistent posting to a fully booked calendar.</div>
+      </div>
+    </div>
+    <div class="pc anim-scale d2">
+      <div class="pc-img pc-img-realty">🏠</div>
+      <div class="pc-body">
+        <div class="pc-tag anim-up-fast d3">Real Estate</div>
+        <h3 class="anim-skew-left d4">Realtor Lead Generation</h3>
+        <div class="pc-result anim-glow d5">📈 40+ qualified leads via Meta Ads</div>
+        <div class="pc-desc anim-fade d6">Targeted Meta ad campaigns positioning a realtor as the go-to expert in their market within 90 days.</div>
+      </div>
+    </div>
+    <div class="pc anim-scale d3">
+      <div class="pc-img pc-img-health">💪</div>
+      <div class="pc-body">
+        <div class="pc-tag anim-up-fast d4">Health Coaching</div>
+        <h3 class="anim-skew-left d5">Health Coach Client Attraction</h3>
+        <div class="pc-result anim-glow d6">📈 Booked out 2 months ahead</div>
+        <div class="pc-desc anim-fade d7">ManyChat DM automation that turned an under-performing Instagram into a fully-booked discovery call calendar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-sec sec">
+  <div class="testi-intro">
+    <div>
+      <span class="sl anim-skew-left">What Clients Say</span>
+      <h2 class="sh anim-left">Success stories<br><em>and counting.</em></h2>
+    </div>
+    <p class="anim-right">Service-based business owners across Canada and beyond trust ComfArd Digital to grow their online presence and fill their client pipeline.</p>
+  </div>
+  <div class="tg">
+    <div class="tc anim-light d1">
+      <div class="tc-stars anim-swing d2">★★★★★</div>
+      <div class="tc-name anim-zoom-out d3">Ry's Beauty Studio</div>
+      <div class="tc-quote anim-blur d4">"100s of booking inquiries last month. We went from posting randomly to a system that actually works and fills our calendar."</div>
+      <div class="tc-role anim-fade d5">Beauty Studio Owner, Toronto</div>
+    </div>
+    <div class="tc anim-light d3">
+      <div class="tc-stars anim-swing d4">★★★★★</div>
+      <div class="tc-name anim-zoom-out d5">Chukwuemeka B.</div>
+      <div class="tc-quote anim-blur d6">"Instrumental in growing my social presence which resulted in huge revenue-generating months — and saved me hours of work every week."</div>
+      <div class="tc-role anim-fade d7">Financial Consultant</div>
+    </div>
+    <div class="tc anim-light d5">
+      <div class="tc-stars anim-swing d6">★★★★★</div>
+      <div class="tc-name anim-zoom-out d7">Temi A.</div>
+      <div class="tc-quote anim-blur d8">"So responsive and knowledgeable and they deliver exactly what they promise. The DM automation has completely transformed how I get clients."</div>
+      <div class="tc-role anim-fade d9">Business Consultant</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec sec">
+  <span class="sl anim-skew-left">How It Works</span>
+  <h2 class="sh" style="margin-bottom:0">
+    <span class="anim-clip"><span class="clip-inner">Three steps to</span></span>
+    <span class="anim-clip d2"><span class="clip-inner"><em>fully booked.</em></span></span>
+  </h2>
+  <div class="how-grid">
+    <div class="hw anim-squeeze d1" data-n="01">
+      <div class="hw-num anim-up-fast d2">Step 01</div>
+      <h3 class="anim-skew-left d3">Book an Intro Call</h3>
+      <p class="anim-fade d4">Book a free Clarity Session with Monisola. We audit your current presence, find the gaps, and map your fastest path to consistent clients from social media.</p>
+    </div>
+    <div class="hw anim-squeeze d3" data-n="02">
+      <div class="hw-num anim-up-fast d4">Step 02</div>
+      <h3 class="anim-skew-left d5">Strategy & Onboarding</h3>
+      <p class="anim-fade d6">We build your custom content and marketing strategy, align on your voice and style, set up ads and automation, and get everything ready to launch.</p>
+    </div>
+    <div class="hw anim-squeeze d5" data-n="03">
+      <div class="hw-num anim-up-fast d6">Step 03</div>
+      <h3 class="anim-skew-left d7">Execute & Scale</h3>
+      <p class="anim-fade d8">We create, post, manage, and optimise consistently. You get monthly reports and real growth while you stay focused on serving your clients.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="res-sec sec">
+  <span class="sl anim-skew-right">Free & Paid Resources</span>
+  <h2 class="sh anim-blur">Start growing,<br><em>even before we talk.</em></h2>
+  <div class="res-grid">
+    <div class="rc anim-skew-left d1"><div class="rc-tag">Free</div><h3>From Visibility to Clients</h3><p>The 10-Day Client Attraction Workbook for service-based businesses. Start getting seen and getting hired.</p></div>
+    <div class="rc anim d2"><div class="rc-tag">Free Quiz</div><h3>Marketing Clarity Quiz</h3><p>Not sure where your marketing is leaking? Take our quiz and get a personalised action plan in minutes.</p></div>
+    <div class="rc anim-skew-right d3"><div class="rc-tag">Guide</div><h3>High-Converting Ads Guide</h3><p>Step-by-step guide to setting up winning Meta and Google Ads that actually drive leads and bookings.</p></div>
+    <div class="rc anim-skew-left d4"><div class="rc-tag">Playbook</div><h3>Auto-DM Your Way to Sales</h3><p>Instagram DM automation playbook for small and medium business owners ready to close clients on autopilot.</p></div>
+    <div class="rc anim d5"><div class="rc-tag">Guide</div><h3>Instagram Comment Automation</h3><p>ManyChat for Beginners — turn every comment into a lead automatically with this step-by-step guide.</p></div>
+    <div class="rc anim-skew-right d6"><div class="rc-tag">EBook</div><h3>10 AI Tools for SMBs</h3><p>The AI tools that turn small business owners into powerhouse content machines — without the burnout.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-sec">
+  <h2 class="sh">
+    <span class="anim-clip"><span class="clip-inner">Ready to build a brand</span></span>
+    <span class="anim-clip d2"><span class="clip-inner"><em>people can't ignore?</em></span></span>
+  </h2>
+  <p class="sub anim-blur">Book your free 30-minute Clarity Session with Monisola. Let's map out exactly how ComfArd Digital can turn your social media from silent to client magnet.</p>
+  <div class="cta-btns anim-bounce d3">
+    <a href="https://linktr.ee/comfarddigital" target="_blank" class="btn btn-coral pulse">Book Your Free Clarity Session →</a>
+    <a href="#portfolio" class="btn btn-outline">Browse Our Work</a>
+  </div>
+</section>
+
+<!-- SOCIAL BAR -->
+<div class="sbar">
+  <span class="sbar-label anim-fade">Follow Along</span>
+  <a href="https://www.instagram.com/comfarddigital" target="_blank" class="sbl anim-up-fast d1">📸 Instagram</a>
+  <a href="#" class="sbl anim-up-fast d2">📘 Facebook</a>
+  <a href="#" class="sbl anim-up-fast d3">🎵 TikTok</a>
+  <a href="#" class="sbl anim-up-fast d4">▶️ YouTube</a>
+  <a href="#" class="sbl anim-up-fast d5">💬 WhatsApp</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="anim-rotate">
+    <div class="ft-name">ComfArd <span>Digital</span></div>
+    <div class="ft-tag">Helping service-based business pros convert social media into client magnets. Winnipeg, Canada | Remote.</div>
+  </div>
+  <div class="ft-links anim-skew-left d3">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Book a Call</a>
+  </div>
+  <div class="ft-copy anim-fade d5">© 2025 ComfArd Digital. All rights reserved.</div>
+</footer>
+
+<script>
+/* ── 1. NAV: changes background on scroll ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── 2. SCROLL REVEAL: all animation types ── */
+const animSelectors = '.anim,.anim-left,.anim-right,.anim-scale,.anim-flip,.anim-blur,.anim-light,.anim-skew-left,.anim-skew-right,.anim-squeeze,.anim-bounce,.anim-clip,.anim-rotate,.anim-zoom-out,.anim-up-fast,.anim-fade,.anim-glow,.anim-swing';
+const animEls = document.querySelectorAll(animSelectors);
+const revealIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+      revealIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+animEls.forEach(el => revealIO.observe(el));
+
+/* ── 3. COUNTER ANIMATION: numbers count up when stats come into view ── */
+function animateCounter(el, target, suffix, duration = 1800) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const tick = () => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.floor(start) + suffix;
+    if (start < target) requestAnimationFrame(tick);
+    else el.textContent = target + suffix;
+  };
+  requestAnimationFrame(tick);
+}
+
+const statEls = document.querySelectorAll('.stt');
+const counterIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+      const counter = e.target.querySelector('.counter');
+      const target  = parseInt(e.target.dataset.target);
+      const suffix  = e.target.dataset.suffix;
+      if (counter && target) animateCounter(counter, target, suffix);
+      counterIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+statEls.forEach(el => counterIO.observe(el));
+
+/* ── 4. PARALLAX: subtle background movement on scroll ── */
+const parallaxBg = document.getElementById('parallaxBg');
+window.addEventListener('scroll', () => {
+  if (parallaxBg) {
+    parallaxBg.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+  }
+}, { passive: true });
+
+/* ── 0. DRAWER MENU: open / close ── */
+const burger     = document.getElementById('burgerBtn');
+const drawer     = document.getElementById('drawer');
+const drawerClose= document.getElementById('drawerClose');
+const drawerBg   = drawer.querySelector('.drawer-bg');
+const drawerLinks= drawer.querySelectorAll('.drawer-link');
+
+function openDrawer(){
+  drawer.classList.add('open');
+  burger.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  burger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+burger.addEventListener('click', () => {
+  drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+});
+drawerClose.addEventListener('click', closeDrawer);
+drawerBg.addEventListener('click', closeDrawer);
+
+// Close on link click + smooth scroll
+drawerLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    closeDrawer();
+  });
+});
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeDrawer();
+});
+
+/* ── 6. MAGNETIC HOVER on buttons ── */
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2;
+    const y = e.clientY - r.top  - r.height/2;
+    btn.style.transform = `translate(${x*.18}px, ${y*.25}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+/* ── 7. SCROLL PROGRESS BAR ── */
+const bar = document.createElement('div');
+bar.style.cssText = 'position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#e8604c,#f07a68);z-index:9999;width:0%;transition:width .1s linear;border-radius:0 2px 2px 0;box-shadow:0 0 8px rgba(232,96,76,.6)';
+document.body.appendChild(bar);
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  bar.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+
+/* ── 8. TYPEWRITER effect on section labels when visible ── */
+function typewrite(el, text, speed = 55) {
+  el.textContent = '';
+  let i = 0;
+  const tick = () => {
+    if (i < text.length) { el.textContent += text[i++]; setTimeout(tick, speed); }
+    else el.classList.remove('typewriter');
+  };
+  el.classList.add('typewriter');
+  tick();
+}
+const twIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      typewrite(e.target, e.target.dataset.text || e.target.textContent);
+      twIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.8 });
+document.querySelectorAll('.sl').forEach(el => {
+  el.dataset.text = el.textContent;
+  el.textContent = '';
+  twIO.observe(el);
+});
+
+/* ── 9. TILT EFFECT on cards (mobile-friendly gyroscope-style) ── */
+document.querySelectorAll('.pc, .tc, .hw').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x*8}deg) rotateX(${-y*6}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+</script>
+</body>
+</html>
