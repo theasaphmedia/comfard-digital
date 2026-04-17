@@ -151,101 +151,6 @@
   .sh em{font-style:normal;color:var(--coral)}
 
   /* ════════════════════════════════
-     SCROLL ANIMATION CLASSES
-  ════════════════════════════════ */
-
-  /* 1. Fade + Rise */
-  .anim{opacity:0;transform:translateY(40px);transition:opacity .75s ease,transform .75s ease}
-  .anim.on{opacity:1;transform:none}
-
-  /* 2. Slide LEFT */
-  .anim-left{opacity:0;transform:translateX(-70px);transition:opacity .75s cubic-bezier(.25,.46,.45,.94),transform .75s cubic-bezier(.25,.46,.45,.94)}
-  .anim-left.on{opacity:1;transform:none}
-
-  /* 3. Slide RIGHT */
-  .anim-right{opacity:0;transform:translateX(70px);transition:opacity .75s cubic-bezier(.25,.46,.45,.94),transform .75s cubic-bezier(.25,.46,.45,.94)}
-  .anim-right.on{opacity:1;transform:none}
-
-  /* 4. Scale / Zoom in with spring */
-  .anim-scale{opacity:0;transform:scale(.82);transition:opacity .7s ease,transform .7s cubic-bezier(.34,1.56,.64,1)}
-  .anim-scale.on{opacity:1;transform:scale(1)}
-
-  /* 5. 3D Flip in */
-  .anim-flip{opacity:0;transform:perspective(600px) rotateX(22deg) translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.25,.46,.45,.94)}
-  .anim-flip.on{opacity:1;transform:perspective(600px) rotateX(0) translateY(0)}
-
-  /* 6. Blur in */
-  .anim-blur{opacity:0;filter:blur(14px);transform:translateY(16px);transition:opacity .85s ease,filter .85s ease,transform .85s ease}
-  .anim-blur.on{opacity:1;filter:blur(0);transform:none}
-
-  /* 7. Light up */
-  .anim-light{opacity:0;filter:brightness(.15) saturate(.3);transition:opacity 1s ease,filter 1s ease}
-  .anim-light.on{opacity:1;filter:brightness(1) saturate(1)}
-
-  /* 8. Skew slide LEFT */
-  .anim-skew-left{opacity:0;transform:translateX(-60px) skewX(10deg);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
-  .anim-skew-left.on{opacity:1;transform:none}
-
-  /* 9. Skew slide RIGHT */
-  .anim-skew-right{opacity:0;transform:translateX(60px) skewX(-10deg);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
-  .anim-skew-right.on{opacity:1;transform:none}
-
-  /* 10. Squeeze / expand from bottom */
-  .anim-squeeze{opacity:0;transform:scaleY(.25) translateY(20px);transform-origin:bottom;transition:opacity .65s ease,transform .7s cubic-bezier(.34,1.5,.64,1)}
-  .anim-squeeze.on{opacity:1;transform:none}
-
-  /* 11. Bounce in (elastic) */
-  .anim-bounce{opacity:0;transform:translateY(55px);transition:opacity .5s ease,transform .85s cubic-bezier(.34,1.8,.64,1)}
-  .anim-bounce.on{opacity:1;transform:none}
-
-  /* 12. Clip / curtain reveal */
-  .anim-clip{position:relative;overflow:hidden;display:block}
-  .anim-clip .clip-inner{transform:translateY(105%);display:block;transition:transform .82s cubic-bezier(.77,0,.175,1)}
-  .anim-clip.on .clip-inner{transform:translateY(0)}
-
-  /* 13. Rotate in from bottom-left */
-  .anim-rotate{opacity:0;transform:rotate(-8deg) translateY(40px) translateX(-20px);transform-origin:bottom left;transition:opacity .8s ease,transform .8s cubic-bezier(.34,1.3,.64,1)}
-  .anim-rotate.on{opacity:1;transform:none}
-
-  /* 14. Zoom out (starts huge → normal) */
-  .anim-zoom-out{opacity:0;transform:scale(1.25);transition:opacity .75s ease,transform .75s cubic-bezier(.25,.46,.45,.94)}
-  .anim-zoom-out.on{opacity:1;transform:scale(1)}
-
-  /* 15. Slide UP fast (for small labels/tags) */
-  .anim-up-fast{opacity:0;transform:translateY(20px);transition:opacity .45s ease,transform .45s cubic-bezier(.34,1.4,.64,1)}
-  .anim-up-fast.on{opacity:1;transform:none}
-
-  /* 16. Fade only (for subtle elements) */
-  .anim-fade{opacity:0;transition:opacity 1s ease}
-  .anim-fade.on{opacity:1}
-
-  /* 17. Pulse glow on arrival */
-  .anim-glow{opacity:0;transition:opacity .6s ease,box-shadow .6s ease}
-  .anim-glow.on{opacity:1;animation:pulseGlow 1.2s .3s ease forwards}
-  @keyframes pulseGlow{
-    0%{box-shadow:0 0 0 rgba(232,96,76,0)}
-    40%{box-shadow:0 0 40px rgba(232,96,76,.5)}
-    100%{box-shadow:0 0 0 rgba(232,96,76,0)}
-  }
-
-  /* 18. Swing in from top */
-  .anim-swing{opacity:0;transform:rotateX(-45deg) translateY(-30px);transform-origin:top;transition:opacity .7s ease,transform .75s cubic-bezier(.34,1.3,.64,1)}
-  .anim-swing.on{opacity:1;transform:none}
-
-  /* Stagger delays — more steps */
-  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
-  .d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
-  .d7{transition-delay:.56s}.d8{transition-delay:.64s}.d9{transition-delay:.72s}
-
-  /* ── Continuous pulse on coral elements ── */
-  @keyframes coralPulse{0%,100%{box-shadow:0 0 0 rgba(232,96,76,0)}50%{box-shadow:0 0 20px rgba(232,96,76,.25)}}
-  .pulse{animation:coralPulse 3s ease-in-out infinite}
-
-  /* ── Typewriter cursor for section labels ── */
-  .typewriter{border-right:2px solid var(--coral);padding-right:2px;animation:cursorBlink .8s step-end infinite}
-  @keyframes cursorBlink{0%,100%{border-color:var(--coral)}50%{border-color:transparent}}
-
-  /* ════════════════════════════════
      STATS — counting numbers
   ════════════════════════════════ */
   .stats-sec{background:var(--navy2);padding:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -952,155 +857,34 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-/* ══════════════════════════════════════
-   SCROLL ANIMATIONS — Dynamic approach
-   Elements visible by default, JS adds
-   animation classes + triggers on scroll
-══════════════════════════════════════ */
-(function() {
+/* ── 1. NAV: changes background on scroll ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
-  // Animation map: selector → [animClass, delayMs]
-  var ANIMS = [
-    /* STATS */
-    ['.stt:nth-child(1)', 'anim-bounce', 0],
-    ['.stt:nth-child(2)', 'anim-bounce', 150],
-    ['.stt:nth-child(3)', 'anim-bounce', 300],
-    /* ABOUT */
-    ['.about-img-box',    'anim-left',   0],
-    ['.about-text h2',    'anim-clip',   100],
-    ['.about-text p:first-of-type', 'anim', 200],
-    ['.about-text p:last-of-type',  'anim', 300],
-    ['.about-link:nth-child(1)', 'anim-skew-left', 200],
-    ['.about-link:nth-child(2)', 'anim-skew-left', 280],
-    ['.about-link:nth-child(3)', 'anim-skew-left', 360],
-    ['.about-link:nth-child(4)', 'anim-skew-left', 440],
-    /* SERVICES */
-    ['.srv-head',     'anim-blur', 0],
-    ['.sc:nth-child(1)', 'anim-flip', 100],
-    ['.sc:nth-child(2)', 'anim-flip', 200],
-    ['.sc:nth-child(3)', 'anim-flip', 300],
-    ['.sc:nth-child(4)', 'anim-flip', 400],
-    /* PORTFOLIO */
-    ['.port-header h2',  'anim-left',  0],
-    ['.pc:nth-child(1)', 'anim-scale', 100],
-    ['.pc:nth-child(2)', 'anim-scale', 220],
-    ['.pc:nth-child(3)', 'anim-scale', 340],
-    /* TESTIMONIALS */
-    ['.testi-intro h2', 'anim-left',  0],
-    ['.tc:nth-child(1)', 'anim-light', 0],
-    ['.tc:nth-child(2)', 'anim-light', 200],
-    ['.tc:nth-child(3)', 'anim-light', 400],
-    /* HOW IT WORKS */
-    ['.hw:nth-child(1)', 'anim-squeeze', 0],
-    ['.hw:nth-child(2)', 'anim-squeeze', 200],
-    ['.hw:nth-child(3)', 'anim-squeeze', 400],
-    /* RESOURCES */
-    ['.rc:nth-child(1)', 'anim-skew-left',  0],
-    ['.rc:nth-child(2)', 'anim',            100],
-    ['.rc:nth-child(3)', 'anim-skew-right', 200],
-    ['.rc:nth-child(4)', 'anim-skew-left',  300],
-    ['.rc:nth-child(5)', 'anim',            400],
-    ['.rc:nth-child(6)', 'anim-skew-right', 500],
-    /* CTA */
-    ['.cta-sec .sh',  'anim-blur',   0],
-    ['.cta-sec .sub', 'anim',        200],
-    ['.cta-btns',     'anim-bounce', 400],
-    /* FOOTER */
-    ['.anim-rotate', 'anim-rotate', 0],
-    ['.ft-links',    'anim-skew-left', 200],
-    ['.ft-copy',     'anim-fade',   400],
-    /* SOCIAL BAR */
-    ['.sbl:nth-child(1)', 'anim-up-fast', 0],
-    ['.sbl:nth-child(2)', 'anim-up-fast', 80],
-    ['.sbl:nth-child(3)', 'anim-up-fast', 160],
-    ['.sbl:nth-child(4)', 'anim-up-fast', 240],
-    ['.sbl:nth-child(5)', 'anim-up-fast', 320],
-  ];
-
-  var fired = new Set();
-
-  function setup() {
-    ANIMS.forEach(function(item, i) {
-      var els = document.querySelectorAll(item[0]);
-      els.forEach(function(el) {
-        if (!el.dataset.animIdx) {
-          el.dataset.animIdx = i;
-          el.dataset.animClass = item[1];
-          el.dataset.animDelay = item[2];
-        }
-      });
-    });
-  }
-
-  function revealAll() {
-    var wh = window.innerHeight;
-    document.querySelectorAll('[data-anim-idx]').forEach(function(el) {
-      if (fired.has(el)) return;
-      var top = el.getBoundingClientRect().top;
-      if (top < wh - 20) {
-        fired.add(el);
-        var cls = el.dataset.animClass;
-        var delay = parseInt(el.dataset.animDelay) || 0;
-        // Add the class (sets opacity:0 + transform)
-        el.classList.add(cls);
-        // Force browser to register it before adding .on
-        requestAnimationFrame(function() {
-          setTimeout(function() {
-            el.classList.add('on');
-          }, delay);
-        });
-      }
-    });
-  }
-
-  // Init after DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { setup(); revealAll(); });
-  } else {
-    setup(); revealAll();
-  }
-
-  window.addEventListener('scroll', revealAll, { passive: true });
-  window.addEventListener('load', function() { setup(); revealAll(); });
-
-  // Safety net
-  var t = setInterval(function() { setup(); revealAll(); }, 400);
-  setTimeout(function() { clearInterval(t); }, 6000);
-
-})();
-
-/* ── 3. COUNTER ANIMATION: numbers count up when stats come into view ── */
-function animateCounter(el, target, suffix, duration = 1800) {
-  let start = 0;
-  const step = target / (duration / 16);
-  const tick = () => {
+/* ── 2. COUNTER: counts up on load ── */
+function animateCounter(el, target, suffix) {
+  var start = 0, duration = 1800;
+  var step = target / (duration / 16);
+  function tick() {
     start = Math.min(start + step, target);
     el.textContent = Math.floor(start) + suffix;
     if (start < target) requestAnimationFrame(tick);
     else el.textContent = target + suffix;
-  };
+  }
   requestAnimationFrame(tick);
 }
-
-const statEls = document.querySelectorAll('.stt');
-const firedStats = new Set();
-function checkStats() {
-  statEls.forEach(el => {
-    if (firedStats.has(el)) return;
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight - 30) {
-      firedStats.add(el);
-      el.classList.add('on');
-      const counter = el.querySelector('.counter');
-      const target  = parseInt(el.dataset.target);
-      const suffix  = el.dataset.suffix;
-      if (counter && target) animateCounter(counter, target, suffix);
-    }
+window.addEventListener('load', function() {
+  document.querySelectorAll('.stt').forEach(function(el) {
+    var counter = el.querySelector('.counter');
+    var target = parseInt(el.dataset.target);
+    var suffix = el.dataset.suffix;
+    if (counter && target) animateCounter(counter, target, suffix);
   });
-}
-checkStats();
-window.addEventListener('scroll', checkStats, { passive: true });
-window.addEventListener('load', checkStats);
+});
+
+
 
 /* ── 4. PARALLAX: subtle background movement on scroll ── */
 const parallaxBg = document.getElementById('parallaxBg');
@@ -1146,6 +930,39 @@ document.addEventListener('keydown', e => {
   if(e.key === 'Escape') closeDrawer();
 });
 
+/* ── 6. MAGNETIC HOVER on buttons ── */
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = e.clientX - r.left - r.width/2;
+    const y = e.clientY - r.top  - r.height/2;
+    btn.style.transform = `translate(${x*.18}px, ${y*.25}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+/* ── 7. SCROLL PROGRESS BAR ── */
+const bar = document.createElement('div');
+bar.style.cssText = 'position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#e8604c,#f07a68);z-index:9999;width:0%;transition:width .1s linear;border-radius:0 2px 2px 0;box-shadow:0 0 8px rgba(232,96,76,.6)';
+document.body.appendChild(bar);
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  bar.style.width = Math.min(pct, 100) + '%';
+}, { passive: true });
+
+/* ── 8. TYPEWRITER effect on section labels when visible ── */
+function typewrite(el, text, speed = 55) {
+  el.textContent = '';
+  let i = 0;
+  const tick = () => {
+    if (i < text.length) { el.textContent += text[i++]; setTimeout(tick, speed); }
+    else el.classList.remove('typewriter');
+  };
+  el.classList.add('typewriter');
+  tick();
+}
 /* ── 6. MAGNETIC HOVER on buttons ── */
 document.querySelectorAll('.btn').forEach(btn => {
   btn.addEventListener('mousemove', e => {
